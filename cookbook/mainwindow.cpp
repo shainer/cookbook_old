@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "addrecipedialog.h"
+#include "viewrecipedialog.h"
 
 #include <QDebug>
 #include <QPointer>
@@ -68,6 +69,10 @@ void RecipeModel::addRecipe(Recipe *recipe) {
     endInsertRows();
 }
 
+Recipe* RecipeModel::getRecipe(const QModelIndex &index) {
+    return m_recipes.at( index.row() );
+}
+
 
 /** MAIN WINDOW **/
 MainWindow::MainWindow(QWidget *parent) :
@@ -78,7 +83,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( ui->addRecipeButton, &QPushButton::clicked, this, &MainWindow::addRecipe );
 
+    connect( ui->recipeView, &QAbstractItemView::doubleClicked, this, &MainWindow::viewRecipe );
     ui->recipeView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->recipeView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->recipeView->setModel(&m_recipeModel);
     ui->recipeView->show();
 }
@@ -95,4 +102,14 @@ void MainWindow::addRecipe() {
         Recipe* recipe = new Recipe(dlg->name(), dlg->procedure(), dlg->tags());
         m_recipeModel.addRecipe(recipe);
     }
+}
+
+void MainWindow::viewRecipe(const QModelIndex& index) {
+    if (index.row() >= m_recipeModel.rowCount()) {
+        return;
+    }
+
+    Recipe* recipe = m_recipeModel.getRecipe(index);
+    QPointer<ViewRecipeDialog> dlg = new ViewRecipeDialog(*recipe, this);
+    dlg->exec();
 }

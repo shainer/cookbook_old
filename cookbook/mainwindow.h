@@ -20,6 +20,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex & /*index*/) const Q_DECL_OVERRIDE;
 
     void addRecipe(Recipe* recipe);
+    Recipe *getRecipe(const QModelIndex& index);
 
 private:
     // TODO: load initial list from database at startup.
@@ -40,6 +41,7 @@ private:
 
 protected slots:
     void addRecipe();
+    void viewRecipe(const QModelIndex &);
 };
 
 #endif // MAINWINDOW_H
