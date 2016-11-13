@@ -46,8 +46,28 @@ bool RecipeDatabaseStorage::removeRecipe(const Recipe &recipe) {
     return false;  // to be implemented
 }
 
-QList<Recipe> RecipeDatabaseStorage::loadRecipes() {
-    return QList<Recipe>();  // to be implemented
+QList<Recipe *> RecipeDatabaseStorage::loadRecipes() {
+    QString query = QString(kGetAllRecipes);
+    std::string tmp = query.toStdString();
+    sqlite3_stmt* statement;
+    QList<Recipe *> result;
+
+    if (sqlite3_prepare_v2(m_db, tmp.c_str(), tmp.size(), &statement, nullptr) != 0) {
+        qDebug() << lastError();
+        return result;
+    }
+
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        int id = sqlite3_column_int(statement, 0);
+        QString name( (const char *)sqlite3_column_text(statement, 1) );
+        QString procedure( (const char *)sqlite3_column_text(statement, 3) );
+
+        result.append( new Recipe(name, procedure, QStringList()) );
+    }
+
+    sqlite3_finalize(statement);
+    // TODO: retrieve tags and ingredients for each recipe.
+    return result;
 }
 
 int RecipeDatabaseStorage::generateRecipeId(const Recipe &recipe) {

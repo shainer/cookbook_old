@@ -43,7 +43,6 @@ Qt::ItemFlags RecipeModel::flags(const QModelIndex &) const {
 QVariant RecipeModel::data(const QModelIndex &index, int role) const {
     if (role == Qt::DisplayRole) {
         Recipe* recipe = m_recipes.at( index.row() );
-        qDebug() << "Requested recipe" << recipe->name();
         QVariant data;
 
         switch (index.column()) {
@@ -94,6 +93,10 @@ MainWindow::MainWindow(QWidget *parent) :
     // TODO: proper configuration and installation of files
     m_recipeDb(new RecipeDatabaseStorage("/usr/local/cookbook/recipes.db"))
 {
+    for (Recipe* recipe : m_recipeDb->loadRecipes()) {
+         m_recipeModel.addRecipe(recipe);
+    }
+
     ui->setupUi(this);
 
     connect( ui->addRecipeButton, &QPushButton::clicked, this, &MainWindow::addRecipe );

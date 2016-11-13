@@ -10,6 +10,9 @@
 namespace cookbook {
 namespace storage {
 
+constexpr char kGetAllRecipes[] = "SELECT id, name, lastupdated, procedure FROM recipes;";
+constexpr char kGetRecipeTags[] = "SELECT (tag) FROM hasTag WHERE recipe = %0;";
+
 constexpr char kGetRecipeId[] = "SELECT id from recipes WHERE name = \"%0\"";
 
 constexpr char kInsertRecipeQuery[] = "INSERT INTO recipes (name, lastupdated, procedure) VALUES (\"%0\", \"%1\", \"%2\"); ";
@@ -25,7 +28,7 @@ public:
 
     bool addRecipe(const Recipe& recipe) override;
     bool removeRecipe(const Recipe& recipe) override;
-    QList<Recipe> loadRecipes() override;
+    QList<Recipe *> loadRecipes() override;
     int generateRecipeId(const Recipe &recipe) override;
 
     QString lastError();
