@@ -69,6 +69,16 @@ void RecipeModel::addRecipe(Recipe *recipe) {
     endInsertRows();
 }
 
+void RecipeModel::deleteRecipe(int index) {
+    if (index < 0 || index >= m_recipes.size()) {
+        return;
+    }
+
+    beginRemoveRows(QModelIndex(), 0, 0);
+    m_recipes.removeAt(index);
+    endRemoveRows();
+}
+
 Recipe* RecipeModel::getRecipe(const QModelIndex &index) {
     return m_recipes.at( index.row() );
 }
@@ -82,6 +92,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     connect( ui->addRecipeButton, &QPushButton::clicked, this, &MainWindow::addRecipe );
+    connect( ui->deleteRecipeButton, &QPushButton::clicked, this, &MainWindow::deleteRecipe );
 
     connect( ui->recipeView, &QAbstractItemView::doubleClicked, this, &MainWindow::viewRecipe );
     ui->recipeView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -112,4 +123,19 @@ void MainWindow::viewRecipe(const QModelIndex& index) {
     Recipe* recipe = m_recipeModel.getRecipe(index);
     QPointer<ViewRecipeDialog> dlg = new ViewRecipeDialog(*recipe, this);
     dlg->exec();
+}
+
+void MainWindow::deleteRecipe() {
+    QItemSelectionModel* selectionModel = ui->recipeView->selectionModel();
+
+    if (!selectionModel->hasSelection()) {
+        return;
+    }
+
+    QModelIndex selectionIndex = selectionModel->currentIndex();
+    if (!selectionIndex.isValid()) {
+        return;
+    }
+
+    m_recipeModel.deleteRecipe(selectionIndex.row());
 }

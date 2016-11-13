@@ -21,6 +21,7 @@ public:
 
     void addRecipe(Recipe* recipe);
     Recipe *getRecipe(const QModelIndex& index);
+    void deleteRecipe(int index);
 
 private:
     // TODO: load initial list from database at startup.
@@ -42,6 +43,7 @@ private:
 protected slots:
     void addRecipe();
     void viewRecipe(const QModelIndex &);
+    void deleteRecipe();
 };
 
 #endif // MAINWINDOW_H

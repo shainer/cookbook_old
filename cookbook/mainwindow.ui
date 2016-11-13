@@ -65,7 +65,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="editRecipeButton">
        <property name="text">
         <string>Edit</string>
        </property>
@@ -76,7 +76,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="deleteRecipeButton">
        <property name="text">
         <string>Delete</string>
        </property>
