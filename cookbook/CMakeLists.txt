@@ -4,10 +4,13 @@ project(cookbook)
 find_package(Qt5Widgets)
 
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-add_library(mainwindow mainwindow.cpp recipe.cpp recipestorage.cpp addrecipedialog.cpp)
+set (COOKBOOK_UI mainwindow.ui addrecipedialog.ui)
+
+qt5_wrap_ui (COOKBOOK_UI_MOC  ${COOKBOOK_UI})
+
+add_library(mainwindow mainwindow.cpp recipe.cpp recipestorage.cpp addrecipedialog.cpp ${COOKBOOK_UI_MOC})
 target_link_libraries (mainwindow Qt5::Widgets)
 
 add_executable(cookbook main.cpp)
