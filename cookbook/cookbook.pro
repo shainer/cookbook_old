@@ -13,8 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    recipestorage.cpp \
+    recipe.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    recipestorage.h \
+    recipe.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    sql/recipes.sql

@@ -1,6 +1,7 @@
 #ifndef RECIPESTORAGE_H
 #define RECIPESTORAGE_H
 
+#include <QObject>
 
 class RecipeStorage : public QObject
 {

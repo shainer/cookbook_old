@@ -2,5 +2,4 @@
 
 RecipeStorage::RecipeStorage(QObject *parent) : QObject(parent)
 {
-
 }
