@@ -1,7 +1,7 @@
 #ifndef RECIPEDATABASESTORAGE_H
 #define RECIPEDATABASESTORAGE_H
 
-#include "recipe.h"
+#include "../recipe.h"
 #include "recipestorage.h"
 #include <sqlite3.h>
 
@@ -10,12 +10,13 @@
 namespace cookbook {
 namespace storage {
 
-constexpr char kInsertRecipeQuery[] = "INSERT INTO recipes (name, lastupdated, procedure) \
-                                     VALUES ($1, $2, $3); ";
-constexpr char kInsertTagQuery[] = "INSERT INTO tags (name) VALUES ($0);";
-constexpr char kAttachTagQuery[] = "INSERT INTO hasTag (recipe, tag) VALUES ($0, $1)";
+constexpr char kGetRecipeId[] = "SELECT id from recipes WHERE name = \"%0\"";
 
-class RecipeDatabaseStorage : RecipeStorage
+constexpr char kInsertRecipeQuery[] = "INSERT INTO recipes (name, lastupdated, procedure) VALUES (\"%0\", \"%1\", \"%2\"); ";
+constexpr char kInsertTagQuery[] = "INSERT INTO tags (name) VALUES (\"%0\");";
+constexpr char kAttachTagQuery[] = "INSERT INTO hasTag (recipe, tag) VALUES (\"%0\", \"%1\")";
+
+class RecipeDatabaseStorage : public RecipeStorage
 {
 
 public:
@@ -25,6 +26,7 @@ public:
     bool addRecipe(const Recipe& recipe) override;
     bool removeRecipe(const Recipe& recipe) override;
     QList<Recipe> loadRecipes() override;
+    int generateRecipeId(const Recipe &recipe) override;
 
     QString lastError();
 

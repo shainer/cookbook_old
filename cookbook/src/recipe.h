@@ -31,6 +31,8 @@ public:
     // TODO: manage ingredients in the view.
     IngredientList ingredients() { return m_ingredients; }
 
+    void set_id( int id ) { m_id = id; }
+
 private:
 
     int m_id;

@@ -5,7 +5,10 @@
 #include "viewrecipedialog.h"
 
 #include <QDebug>
+#include <QErrorMessage>
 #include <QPointer>
+
+using ::cookbook::storage::RecipeDatabaseStorage;
 
 int RecipeModel::rowCount(const QModelIndex &parent) const {
     return m_recipes.size();
@@ -87,7 +90,9 @@ Recipe* RecipeModel::getRecipe(const QModelIndex &index) {
 /** MAIN WINDOW **/
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    // TODO: proper configuration and installation of files
+    m_recipeDb(new RecipeDatabaseStorage("/usr/local/cookbook/recipes.db"))
 {
     ui->setupUi(this);
 
@@ -103,6 +108,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete m_recipeDb;
     delete ui;
 }
 
@@ -111,6 +117,17 @@ void MainWindow::addRecipe() {
 
     if (dlg->exec() == QDialog::Accepted) {
         Recipe* recipe = new Recipe(dlg->name(), dlg->procedure(), dlg->tags());
+
+        bool success = m_recipeDb->addRecipe(*recipe);
+        int id =  m_recipeDb->generateRecipeId(*recipe);
+
+        if (!success || id == -1) {
+            QErrorMessage error_message;
+            error_message.showMessage("Error storing the new recipe on the database.");
+            return;
+        }
+
+        recipe->set_id( id );
         m_recipeModel.addRecipe(recipe);
     }
 }

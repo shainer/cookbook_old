@@ -5,6 +5,8 @@
 #include <QList>
 #include <QMainWindow>
 
+#include "storage/recipestorage.h"
+#include "storage/recipedatabasestorage.h"
 #include "recipe.h"
 
 namespace Ui {
@@ -39,6 +41,7 @@ public:
 private:
     Ui::MainWindow *ui;
     RecipeModel m_recipeModel;
+    ::cookbook::storage::RecipeStorage* m_recipeDb;
 
 protected slots:
     void addRecipe();
