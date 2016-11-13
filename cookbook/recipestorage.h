@@ -1,17 +1,19 @@
 #ifndef RECIPESTORAGE_H
 #define RECIPESTORAGE_H
 
-#include <QObject>
+#include "recipe.h"
+#include <QList>
 
-class RecipeStorage : public QObject
+class RecipeStorage
 {
-    Q_OBJECT
+
 public:
-    explicit RecipeStorage(QObject *parent = 0);
+    explicit RecipeStorage() { }
+    virtual ~RecipeStorage() { }
 
-signals:
-
-public slots:
+    virtual bool addRecipe(const Recipe& recipe) = 0;
+    virtual bool removeRecipe(const Recipe& recipe) = 0;
+    virtual QList<Recipe> loadRecipes() = 0;
 };
 
 #endif // RECIPESTORAGE_H

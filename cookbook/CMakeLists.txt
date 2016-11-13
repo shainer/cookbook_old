@@ -10,7 +10,7 @@ set (COOKBOOK_UI mainwindow.ui addrecipedialog.ui viewrecipedialog.ui)
 
 qt5_wrap_ui (COOKBOOK_UI_MOC  ${COOKBOOK_UI})
 
-add_library(mainwindow mainwindow.cpp recipe.cpp recipestorage.cpp addrecipedialog.cpp viewrecipedialog.cpp ${COOKBOOK_UI_MOC})
+add_library(mainwindow mainwindow.cpp recipe.cpp recipestorage.cpp addrecipedialog.cpp viewrecipedialog.cpp recipedatabasestorage.cpp ${COOKBOOK_UI_MOC})
 target_link_libraries (mainwindow Qt5::Widgets)
 
 add_executable(cookbook main.cpp)

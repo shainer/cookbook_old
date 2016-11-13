@@ -1,15 +1,15 @@
 CREATE TABLE IF NOT EXISTS recipes (
-  `id` INTEGER PRIMARY KEY ASC ,
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `name` TEXT NOT NULL ,
   `lastupdated` INTEGER NOT NULL,
   `procedure` TEXT NOT NULL);
 
 CREATE INDEX `recipe_name` ON `recipes` (`name` ASC) ;
 
-CREATE TABLE IF NOT EXISTS `tag` (
+CREATE TABLE IF NOT EXISTS `tags` (
   `name` TEXT PRIMARY KEY );
 
-CREATE TABLE IF NOT EXISTS `ingredient` (
+CREATE TABLE IF NOT EXISTS `ingredients` (
   `name` TEXT PRIMARY KEY );
 
 CREATE TABLE IF NOT EXISTS `hasTag` (
