@@ -19,6 +19,8 @@ constexpr char kInsertRecipeQuery[] = "INSERT INTO recipes (name, lastupdated, p
 constexpr char kInsertTagQuery[] = "INSERT INTO tags (name) VALUES (\"%0\");";
 constexpr char kAttachTagQuery[] = "INSERT INTO hasTag (recipe, tag) VALUES (\"%0\", \"%1\")";
 
+constexpr char kDeleteRecipe[] = "DELETE FROM recipes WHERE id = %0;";
+
 class RecipeDatabaseStorage : public RecipeStorage
 {
 

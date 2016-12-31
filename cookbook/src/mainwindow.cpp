@@ -157,5 +157,14 @@ void MainWindow::deleteRecipe() {
         return;
     }
 
-    m_recipeModel.deleteRecipe(selectionIndex.row());
+    Recipe* recipe = m_recipeModel.getRecipe(selectionIndex);
+
+    if (m_recipeDb->removeRecipe(*recipe)) {
+        m_recipeModel.deleteRecipe(selectionIndex.row());
+        delete recipe;
+    } else {
+        QErrorMessage error_message;
+        error_message.showMessage("Error deleting recipe from the database.");
+        error_message.exec();
+    }
 }

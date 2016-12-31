@@ -43,7 +43,18 @@ bool RecipeDatabaseStorage::addRecipe(const Recipe &recipe) {
 }
 
 bool RecipeDatabaseStorage::removeRecipe(const Recipe &recipe) {
-    return false;  // to be implemented
+    QString deleteQuery = QString(kDeleteRecipe).arg(recipe.name());
+
+    std::string tmp = deleteQuery.toStdString();
+    int err = sqlite3_exec(m_db, tmp.c_str(), nullptr, nullptr, nullptr);
+    if (err != 0) {
+        qDebug() << sqlite3_errmsg(m_db);
+        return false;
+    }
+
+    // TODO: delete tags and ingredients if unused now?
+
+    return true;
 }
 
 QList<Recipe *> RecipeDatabaseStorage::loadRecipes() {
