@@ -116,7 +116,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::addRecipe() {
-    QPointer<AddRecipeDialog> dlg = new AddRecipeDialog(this);
+    QPointer<AddRecipeDialog> dlg = new AddRecipeDialog(&m_tagsModel, this);
 
     if (dlg->exec() == QDialog::Accepted) {
         Recipe* recipe = new Recipe(dlg->name(), dlg->procedure(), dlg->tags());
@@ -132,6 +132,10 @@ void MainWindow::addRecipe() {
 
         recipe->set_id( id );
         m_recipeModel.addRecipe(recipe);
+
+        for (const QString& tag : dlg->tags()) {
+            m_tagsModel.addTag(tag);
+        }
     }
 }
 

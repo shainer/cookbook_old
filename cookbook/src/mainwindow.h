@@ -8,6 +8,7 @@
 #include "storage/recipestorage.h"
 #include "storage/recipedatabasestorage.h"
 #include "recipe.h"
+#include "tags.h"
 
 namespace Ui {
 class MainWindow;
@@ -40,7 +41,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
     RecipeModel m_recipeModel;
+    TagsModel m_tagsModel;
+
     ::cookbook::storage::RecipeStorage* m_recipeDb;
 
 protected slots:

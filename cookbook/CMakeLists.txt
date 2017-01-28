@@ -24,6 +24,7 @@ set (SOURCE_FILES
     src/addrecipedialog.cpp
     src/viewrecipedialog.cpp
     src/mainwindow.cpp
+    src/tags.cpp
     src/storage/recipestorage.cpp
     src/storage/recipedatabasestorage.cpp)
 
