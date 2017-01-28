@@ -43,7 +43,7 @@ bool RecipeDatabaseStorage::addRecipe(const Recipe &recipe) {
 }
 
 bool RecipeDatabaseStorage::removeRecipe(const Recipe &recipe) {
-    QString deleteQuery = QString(kDeleteRecipe).arg(recipe.name());
+    QString deleteQuery = QString(kDeleteRecipe).arg(recipe.id());
 
     std::string tmp = deleteQuery.toStdString();
     int err = sqlite3_exec(m_db, tmp.c_str(), nullptr, nullptr, nullptr);
