@@ -1,5 +1,7 @@
 #include "tags.h"
 
+#include <QDebug>
+
 int TagsModel::rowCount(const QModelIndex &parent) const {
     return m_tags.size();
 }
@@ -13,6 +15,7 @@ QVariant TagsModel::data(const QModelIndex &index, int role) const {
 }
 
 void TagsModel::addTag(const QString& tag) {
+    qDebug() << "Adding tag to model:" << tag;
     beginInsertRows(QModelIndex(), 0, 0);
     m_tags.insert(tag);
     endInsertRows();

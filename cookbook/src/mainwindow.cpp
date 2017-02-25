@@ -121,16 +121,13 @@ void MainWindow::addRecipe() {
     if (dlg->exec() == QDialog::Accepted) {
         Recipe* recipe = new Recipe(dlg->name(), dlg->procedure(), dlg->tags());
 
-        bool success = m_recipeDb->addRecipe(*recipe);
-        int id =  m_recipeDb->generateRecipeId(*recipe);
-
-        if (!success || id == -1) {
+        bool success = m_recipeDb->addRecipe(recipe);
+        if (!success) {
             QErrorMessage error_message;
             error_message.showMessage("Error storing the new recipe on the database.");
             return;
         }
 
-        recipe->set_id( id );
         m_recipeModel.addRecipe(recipe);
 
         for (const QString& tag : dlg->tags()) {

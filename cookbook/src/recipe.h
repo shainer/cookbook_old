@@ -35,6 +35,7 @@ public:
     IngredientList ingredients() { return m_ingredients; }
 
     void set_id( int id ) { m_id = id; }
+    void set_tags(const QStringList& tags ) { m_tags = tags; }
 
 private:
 
