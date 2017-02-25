@@ -20,7 +20,10 @@ class Recipe
 
 public:
     Recipe(const QString& name, const QString& procedure, const QStringList& tags)
-        : m_name(name), m_procedure(procedure), m_tags(tags) {}
+        : m_id(-1), m_name(name), m_procedure(procedure), m_tags(tags) {}
+
+    Recipe(int id, const QString& name, const QString& procedure, const QStringList& tags)
+        : m_id(id), m_name(name), m_procedure(procedure), m_tags(tags) {}
 
     int id() const { return m_id; }
     QString name() const { return m_name; }

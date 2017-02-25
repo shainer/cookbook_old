@@ -73,7 +73,7 @@ QList<Recipe *> RecipeDatabaseStorage::loadRecipes() {
         QString name( (const char *)sqlite3_column_text(statement, 1) );
         QString procedure( (const char *)sqlite3_column_text(statement, 3) );
 
-        result.append( new Recipe(name, procedure, QStringList()) );
+        result.append( new Recipe(id, name, procedure, QStringList()) );
     }
 
     sqlite3_finalize(statement);
