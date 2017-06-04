@@ -88,6 +88,26 @@ QList<Recipe *> RecipeDatabaseStorage::loadRecipes() {
     return result;
 }
 
+QStringList RecipeDatabaseStorage::loadTags() {
+    QString query = QString(kGetAllTags);
+    std::string tmp = query.toStdString();
+    sqlite3_stmt* statement;
+    QStringList result;
+
+    if (sqlite3_prepare_v2(m_db, tmp.c_str(), tmp.size(), &statement, nullptr) != 0) {
+        qDebug() << lastError();
+        return result;
+    }
+
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        QString name( (const char *)sqlite3_column_text(statement, 0) );
+        result.append(name);
+    }
+
+    sqlite3_finalize(statement);
+    return result;
+}
+
 QStringList RecipeDatabaseStorage::getRecipeTags(int recipe_id) {
     QString query = QString(kGetRecipeTags).arg(recipe_id);
     std::string tmp = query.toStdString();

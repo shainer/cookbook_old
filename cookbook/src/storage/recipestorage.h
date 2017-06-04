@@ -3,6 +3,7 @@
 
 #include "../recipe.h"
 #include <QList>
+#include <QStringList>
 
 namespace cookbook {
 namespace storage {
@@ -18,6 +19,7 @@ public:
     virtual bool addRecipe(Recipe* recipe) = 0;
     virtual bool removeRecipe(const Recipe& recipe) = 0;
     virtual QList<Recipe *> loadRecipes() = 0;
+    virtual QStringList loadTags() = 0;
     virtual int generateRecipeId( const Recipe& recipe ) = 0;
 };
 

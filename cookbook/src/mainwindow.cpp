@@ -97,6 +97,10 @@ MainWindow::MainWindow(QWidget *parent) :
          m_recipeModel.addRecipe(recipe);
     }
 
+    for (const QString& tag : m_recipeDb->loadTags()) {
+        m_tagsModel.addTag((tag));
+    }
+
     ui->setupUi(this);
 
     connect( ui->addRecipeButton, &QPushButton::clicked, this, &MainWindow::addRecipe );
